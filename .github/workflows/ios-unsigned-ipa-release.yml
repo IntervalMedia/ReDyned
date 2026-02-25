@@ -18,11 +18,17 @@ on:
 
 permissions:
   contents: write
-
+  
 jobs:
   build-unsigned-ipa:
-    runs-on: macos-14
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        xcode: ['15.3']
     steps:
+      - name: Select Xcode version
+        run: sudo xcode-select -switch /Applications/Xcode_${{ matrix.xcode }}.app
+        
       - name: Checkout
         uses: actions/checkout@v4
 
