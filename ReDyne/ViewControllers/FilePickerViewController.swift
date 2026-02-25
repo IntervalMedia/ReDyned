@@ -328,7 +328,7 @@ extension FilePickerViewController: UITableViewDelegate {
                 var isStale = false
                 let url = try URL(
                     resolvingBookmarkData: bookmarkData,
-                    options: [.withoutUI, .withSecurityScope],
+                    options: [.withoutUI],
                     relativeTo: nil,
                     bookmarkDataIsStale: &isStale
                 )
@@ -340,7 +340,7 @@ extension FilePickerViewController: UITableViewDelegate {
                 
                 if isStale || url.path != path {
                     if let newBookmarkData = try? url.bookmarkData(
-                        options: [.minimalBookmark, .withSecurityScope],
+                        options: [.minimalBookmark],
                         includingResourceValuesForKeys: nil,
                         relativeTo: nil
                     ) {
@@ -482,7 +482,7 @@ extension FilePickerViewController: UIDocumentPickerDelegate {
 
         do {
             let bookmarkData = try url.bookmarkData(
-                options: [.minimalBookmark, .withSecurityScope],
+                options: [.minimalBookmark],
                 includingResourceValuesForKeys: nil,
                 relativeTo: nil
             )

@@ -216,7 +216,7 @@ class DecompileViewController: UIViewController {
             }
 
             self.updateStatus("Generating class dump...", progress: 0.91)
-            if let classDumpHeader = ClassDumpService.generateHeader(forBinaryAtPath: self.fileURL.path) {
+            if let classDumpHeader = ClassDumpService.generateHeaderForBinary(atPath: self.fileURL.path) {
                 output.classDumpHeader = classDumpHeader
             }
 

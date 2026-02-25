@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Reused the app version label in settings, diagnostics, and export outputs
 - UserDefaults keys now derive from the bundle identifier instead of a hardcoded value
 
+### 🐛 Bug Fixes
+- Fixed ClassDumpService method name mismatch in DecompileViewController (generateHeaderForBinary vs generateHeader)
+- Removed iOS-unavailable .withSecurityScope bookmark options from FilePickerViewController
+
 ## [1.1.0] - 2026-02-26
 
 ### ✨ Added
