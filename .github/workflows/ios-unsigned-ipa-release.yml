@@ -1,0 +1,80 @@
+name: iOS Unsigned IPA Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version tag (e.g., v1.1.0-unsigned)"
+        required: false
+      release_tag:
+        description: "Release tag to create"
+        required: false
+      release_name:
+        description: "Release name"
+        required: false
+      release_notes:
+        description: "Release notes body (optional)"
+        required: false
+
+permissions:
+  contents: write
+
+jobs:
+  build-unsigned-ipa:
+    runs-on: macos-14
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show Xcode Version
+        run: xcodebuild -version
+
+      - name: Archive (Unsigned)
+        run: |
+          xcodebuild \
+            -project ReDyne.xcodeproj \
+            -scheme ReDyne \
+            -configuration Release \
+            -sdk iphoneos \
+            -archivePath build/ReDyne.xcarchive \
+            archive \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_IDENTITY="" \
+            DEVELOPMENT_TEAM=""
+
+      - name: Create Unsigned IPA
+        run: |
+          rm -rf build/unsigned_export
+          mkdir -p build/unsigned_export/Payload
+          cp -R build/ReDyne.xcarchive/Products/Applications/ReDyne.app build/unsigned_export/Payload/
+          (cd build/unsigned_export && /usr/bin/zip -r ../ReDyne-unsigned.ipa Payload)
+
+      - name: Upload IPA Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ReDyne-unsigned-ipa
+          path: build/ReDyne-unsigned.ipa
+          retention-days: 14
+
+      - name: Resolve Release Metadata
+        id: release_meta
+        run: |
+          VERSION="${{ inputs.version }}"
+          TAG="${{ inputs.release_tag }}"
+          NAME="${{ inputs.release_name }}"
+          if [ -n "$VERSION" ]; then TAG="$VERSION"; fi
+          if [ -z "$TAG" ]; then TAG="unsigned-ipa-${GITHUB_RUN_NUMBER}"; fi
+          if [ -z "$NAME" ]; then NAME="Unsigned IPA ${GITHUB_RUN_NUMBER}"; fi
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "name=$NAME" >> "$GITHUB_OUTPUT"
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.release_meta.outputs.tag }}
+          name: ${{ steps.release_meta.outputs.name }}
+          files: build/ReDyne-unsigned.ipa
+          body: ${{ inputs.release_notes }}
+          draft: false
+          prerelease: false
