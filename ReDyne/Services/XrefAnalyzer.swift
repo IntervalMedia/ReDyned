@@ -475,7 +475,7 @@ class XrefAnalyzer {
         guard let destReg = parseRegisterNumber(components[0]) else { return nil }
         guard let srcReg = parseRegisterNumber(components[1]) else { return nil }
         
-        var immStr = components[2].replacingOccurrences(of: "#", with: "")
+        let immStr = components[2].replacingOccurrences(of: "#", with: "")
         
         if immStr.hasPrefix("0x") {
             let hexStr = immStr.replacingOccurrences(of: "0x", with: "")
@@ -495,7 +495,7 @@ class XrefAnalyzer {
         
         guard let destReg = parseRegisterNumber(components[0]) else { return nil }
         
-        var srcStr = components[1].replacingOccurrences(of: "#", with: "")
+        let srcStr = components[1].replacingOccurrences(of: "#", with: "")
         
         if srcStr.hasPrefix("0x") {
             let hexStr = srcStr.replacingOccurrences(of: "0x", with: "")

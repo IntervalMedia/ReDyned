@@ -88,7 +88,7 @@ class BinaryPatchDetailViewController: UIViewController {
     }
     
     @objc private func applyPatchSet() {
-        guard let binaryPath = binaryPath else {
+        guard binaryPath != nil else {
             let alert = UIAlertController(title: "No Binary", message: "Please specify a target binary to apply patches", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default))
             present(alert, animated: true)

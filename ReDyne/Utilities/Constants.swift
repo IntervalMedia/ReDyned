@@ -208,10 +208,10 @@ extension Constants {
                 return type
             }
             let exportedIdentifier = "public.\(ext)"
-            if let exportedType = try? UTType(exportedAs: exportedIdentifier) {
+            if let exportedType = UTType(exportedAs: exportedIdentifier) {
                 return exportedType
             }
-            if let importedType = try? UTType(importedAs: exportedIdentifier) {
+            if let importedType = UTType(importedAs: exportedIdentifier) {
                 return importedType
             }
             return .data

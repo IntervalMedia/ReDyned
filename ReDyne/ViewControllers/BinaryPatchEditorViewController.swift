@@ -127,7 +127,7 @@ class BinaryPatchEditorViewController: UIViewController, UITextFieldDelegate, UI
     private func setupFields() {
         var lastView: UIView?
         let spacing: CGFloat = 16
-        let sectionSpacing: CGFloat = 32
+        let _ = 32  // Reserved for future layout adjustments
         let basicInfoHeader = createSectionHeader(text: "Basic Information")
         contentView.addSubview(basicInfoHeader)
         NSLayoutConstraint.activate([
@@ -440,7 +440,7 @@ class BinaryPatchEditorViewController: UIViewController, UITextFieldDelegate, UI
             patchedBytes: Data(patchedBytes),
             createdAt: patch?.createdAt ?? Date(),
             updatedAt: Date(),
-            checksum: checksum ?? "",
+            checksum: checksum,
             notes: notesTextView.text,
             expectedUUID: patchSet.targetUUID,
             expectedArchitecture: patchSet.targetArchitecture

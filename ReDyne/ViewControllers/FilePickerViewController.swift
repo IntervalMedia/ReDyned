@@ -650,7 +650,7 @@ extension FilePickerViewController: UIDropInteractionDelegate {
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
         session.loadObjects(ofClass: URL.self) { [weak self] urls in
             guard let self = self,
-                  let url = urls.first as? URL else { return }
+                  let url = urls.first else { return }
             
             DispatchQueue.main.async {
                 if UserDefaults.standard.useLegacyFilePicker {

@@ -152,7 +152,7 @@ class ErrorHandler {
         if let nsError = error as NSError? {
             print("   Domain: \(nsError.domain)")
             print("   Code: \(nsError.code)")
-            if let userInfo = nsError.userInfo as? [String: Any], !userInfo.isEmpty {
+            if !nsError.userInfo.isEmpty {
                 print("   UserInfo: \(userInfo)")
             }
         }
