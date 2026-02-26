@@ -390,7 +390,7 @@ extension BinaryPatchEngine.Error: LocalizedError {
             return "Cannot write file at \(path): \(error.localizedDescription)"
         case .patchOutsideBounds(let patchID, let offset, let length, let fileSize):
             return "Patch \(patchID) at offset 0x\(String(format: "%llX", offset)) with length \(length) exceeds file size (\(fileSize) bytes)"
-        case .originalBytesMismatch(let patchID, let offset, let expected, let actual):
+        case .originalBytesMismatch(let patchID, let offset, let expected, _):
             return "Patch \(patchID) at offset 0x\(String(format: "%llX", offset)): expected \(expected.count) bytes but found different content"
         case .overlappingPatches(let patchID, let overlapping, let range):
             return "Patch \(patchID) overlaps with patch \(overlapping) in range 0x\(String(format: "%llX", range.lowerBound))-0x\(String(format: "%llX", range.upperBound))"

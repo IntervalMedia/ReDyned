@@ -177,7 +177,7 @@ class CFGLayout {
         
         for (level, nodesInLevel) in levels.enumerated() {
             let nodeWidth: CGFloat = 220
-            let nodeHeight: CGFloat = 100
+            let _: CGFloat = 100
             
             for node in nodesInLevel {
                 let instructionCount = node.instructions.count

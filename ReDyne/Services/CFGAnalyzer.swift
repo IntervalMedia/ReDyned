@@ -14,7 +14,7 @@ import Foundation
         var functionCFGs: [FunctionCFG] = []
         
         for (index, function) in functions.prefix(50).enumerated() {
-            if let instructions = function.instructions as? [InstructionModel] {
+            if let instructions = function.instructions {
                 print("   Function #\(index): \(function.name) has \(instructions.count) instructions")
             } else {
                 print("   Function #\(index): \(function.name) has NO instructions!")
@@ -42,7 +42,7 @@ import Foundation
     /// - Parameter function: The function to analyze
     /// - Returns: Control flow graph for the function, or nil if analysis fails
     private static func analyzeFunctionCFG(_ function: FunctionModel) -> FunctionCFG? {
-        guard let instructions = function.instructions as? [InstructionModel], !instructions.isEmpty else { return nil }
+        guard let instructions = function.instructions, !instructions.isEmpty else { return nil }
         
         var nodes: [CFGNode] = []
         var edges: [CFGEdge] = []

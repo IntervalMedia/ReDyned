@@ -991,7 +991,7 @@ class FunctionDetailViewController: UIViewController {
         details += "║          DISASSEMBLY                  ║\n"
         details += "╚═══════════════════════════════════════╝\n\n"
         
-        if let instructions = function.instructions as [InstructionModel]? {
+        if let instructions = function.instructions {
             for inst in instructions.prefix(100) { // you can set any values instead of 100 (but for me, 100 was enough to look around)
                 details += "\(inst.fullDisassembly)\n"
             }

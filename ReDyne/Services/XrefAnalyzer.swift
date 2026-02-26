@@ -447,7 +447,7 @@ class XrefAnalyzer {
         
         guard let destReg = parseRegisterNumber(components[0]) else { return nil }
         
-        var addressStr = components[1].replacingOccurrences(of: "#", with: "")
+        let addressStr = components[1].replacingOccurrences(of: "#", with: "")
         
         if addressStr.hasPrefix("0x") {
             let hexStr = addressStr.replacingOccurrences(of: "0x", with: "")
