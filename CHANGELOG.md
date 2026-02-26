@@ -28,6 +28,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed binary metadata not persisting across app reloads by implementing comprehensive decompilation cache
 - **CRITICAL BUILD FIX**: Removed 217 macOS resource fork files (._* files) that were causing Xcode build failures with error code 65
 - **MARKDOWN FIXES**: Corrected all markdown linting errors in README.md (blank lines, code blocks, list formatting)
+- **COMPILATION ERRORS**: Added `versionString` property to `Constants.App` and fixed `Data.write` option from `.atomic` to `.atomicWrite`
+- **CODE QUALITY**: Fixed 17 Swift compiler warnings:
+  - Unused variables replaced with `_` (nodeHeight, actual, sectionSpacing)
+  - Unnecessary type casts removed (function.instructions, URL, SymbolModel)
+  - Immutable variables changed from `var` to `let` (addressStr, immStr, srcStr)
+  - Unused `try?` expressions removed for non-throwing functions
+  - Unused result warnings addressed with `_ =`
 
 ## [1.1.0] - 2026-02-26
 
