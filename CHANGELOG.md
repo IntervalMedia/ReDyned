@@ -26,6 +26,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed iOS-unavailable .withSecurityScope bookmark options from FilePickerViewController
 - Fixed JSON file selection for function name import, patch import, and database import to use EnhancedFilePicker in Legacy mode
 - Fixed binary metadata not persisting across app reloads by implementing comprehensive decompilation cache
+- **CRITICAL BUILD FIX**: Removed 217 macOS resource fork files (._* files) that were causing Xcode build failures with error code 65
+- **MARKDOWN FIXES**: Corrected all markdown linting errors in README.md (blank lines, code blocks, list formatting)
 
 ## [1.1.0] - 2026-02-26
 
