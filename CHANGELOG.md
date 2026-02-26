@@ -35,6 +35,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Immutable variables changed from `var` to `let` (addressStr, immStr, srcStr)
   - Unused `try?` expressions removed for non-throwing functions
   - Unused result warnings addressed with `_ =`
+- **iOS 26.2 SDK COMPATIBILITY**: Fixed CI/CD compilation errors specific to newer SDK:
+  - `UTType(exportedAs:)` and `UTType(importedAs:)` now return non-optional types
+  - Fixed undefined `userInfo` variable reference in ErrorHandler (use `nsError.userInfo`)
 
 ## [1.1.0] - 2026-02-26
 
