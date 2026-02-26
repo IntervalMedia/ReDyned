@@ -91,6 +91,10 @@ enum Constants {
             Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
         }
 
+        static var versionString: String {
+            shortVersion ?? "1.0.0"
+        }
+
         static var buildVersion: String? {
             Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String
         }

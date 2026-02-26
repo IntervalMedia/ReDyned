@@ -114,7 +114,7 @@ final class DecompilationCache {
             
             let metadataURL = cacheDir.appendingPathComponent(metadataFileName)
             let metadataData = try JSONEncoder().encode(metadata)
-            try metadataData.write(to: metadataURL, options: .atomic)
+            try metadataData.write(to: metadataURL, options: .atomicWrite)
             
             // Save cache data using NSKeyedArchiver
             let cacheFileURL = cacheDir.appendingPathComponent(cacheFileName)
