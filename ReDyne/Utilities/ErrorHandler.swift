@@ -153,7 +153,7 @@ class ErrorHandler {
             print("   Domain: \(nsError.domain)")
             print("   Code: \(nsError.code)")
             if !nsError.userInfo.isEmpty {
-                print("   UserInfo: \(userInfo)")
+                print("   UserInfo: \(nsError.userInfo)")
             }
         }
     }

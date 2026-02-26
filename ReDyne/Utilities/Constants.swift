@@ -212,13 +212,7 @@ extension Constants {
                 return type
             }
             let exportedIdentifier = "public.\(ext)"
-            if let exportedType = UTType(exportedAs: exportedIdentifier) {
-                return exportedType
-            }
-            if let importedType = UTType(importedAs: exportedIdentifier) {
-                return importedType
-            }
-            return .data
+            return UTType(exportedAs: exportedIdentifier)
         }
 
         static func isSupportedBinaryExtension(_ ext: String) -> Bool {
