@@ -1,8 +1,6 @@
 # ReDyne
 
-<div align="center">
-
-**A Production-Grade iOS Decompiler & Reverse Engineering Suite**
+> A Production-Grade iOS Decompiler & Reverse Engineering Suite
 
 [![Platform](https://img.shields.io/badge/platform-iOS%2016.0%2B-blue.svg)](https://developer.apple.com/ios/)
 [![Swift](https://img.shields.io/badge/Swift-5.9-orange.svg)](https://swift.org)
@@ -11,9 +9,7 @@
 
 *Deep Mach-O analysis, ARM64/x86_64 disassembly, control flow graphs, and advanced reverse engineering tools — all native on iOS.*
 
-[Features](#features) • [Installation](#installation) • [Usage](#usage) • [Architecture](#architecture) • [Contributing](#contributing)
-
-</div>
+[Features](#features) · [Installation](#installation) · [Usage](#usage) · [Architecture](#architecture) · [Contributing](#contributing)
 
 ---
 
@@ -40,6 +36,7 @@ ReDyne is a sophisticated, native iOS application for reverse engineering and an
 ## ✨ Features
 
 ### 📦 Mach-O Binary Analysis
+
 - **Universal Binary Support**: Automatic fat/thin binary detection
 - **Multi-Architecture**: ARM64, ARM64e, x86_64 support
 - **Architecture Selection**: Pick specific slice from universal binaries
@@ -48,6 +45,8 @@ ReDyne is a sophisticated, native iOS application for reverse engineering and an
 - **Segments & Sections**: Detailed segment/section analysis with flags
 
 ### 🔍 Disassembly Engine
+
+
 - **ARM64 Disassembler**: Production-grade decoder with 100+ instruction types
   - Data Processing (ADD, SUB, MOV, MOVZ, MOVN, MOVK)
   - Load/Store (LDR, STR, LDP, STP, LDUR, STUR)
@@ -63,6 +62,8 @@ ReDyne is a sophisticated, native iOS application for reverse engineering and an
 - **Branch Detection**: Automatic identification of control flow changes
 
 ### 🔗 Cross-Reference Analysis
+
+
 - **Call Graphs**: 586+ calls detected per binary
 - **Jump Analysis**: 277+ jumps/branches tracked
 - **Data References**: Symbol and address resolution
@@ -70,6 +71,8 @@ ReDyne is a sophisticated, native iOS application for reverse engineering and an
 - **Page-Aligned Addresses**: Proper ARM64 address computation
 
 ### 📊 Control Flow Graphs (CFG)
+
+
 - **Hierarchical Layout**: BFS-based level assignment
 - **Basic Block Analysis**: Automatic BB detection and splitting
 - **Edge Classification**: True/false branches, loop-backs, calls, returns
@@ -79,6 +82,7 @@ ReDyne is a sophisticated, native iOS application for reverse engineering and an
 - **Color-Coded**: Entry (blue), exit (red), conditional (orange)
 
 ### 🧬 Symbol Analysis
+
 - **Symbol Table Parsing**: Complete nlist/nlist_64 support
 - **Symbol Types**: Functions, objects, sections, undefined
 - **Dynamic Symbols**: Import/export detection
@@ -87,6 +91,7 @@ ReDyne is a sophisticated, native iOS application for reverse engineering and an
 - **Function Name Import**: Load JSON mappings and override function names by address
 
 ### 🎯 Objective-C Runtime
+
 - **Class Extraction**: Parse `__objc_classlist` sections
 - **Method Discovery**: Instance and class methods
 - **Property Analysis**: @property declarations
@@ -95,6 +100,7 @@ ReDyne is a sophisticated, native iOS application for reverse engineering and an
 - **Protocols**: Protocol conformance detection
 
 ### 📥 Import/Export Tables
+
 - **Dyld Bind Info**: All 12 bind opcodes (DONE, SET_*, DO_BIND_*)
 - **Dyld Rebase Info**: All 9 rebase opcodes
 - **Export Trie**: Recursive traversal with ULEB128 decoding
@@ -103,6 +109,7 @@ ReDyne is a sophisticated, native iOS application for reverse engineering and an
 - **Library Dependencies**: Full dylib dependency tree
 
 ### 🔐 Code Signature Inspector
+
 - **SuperBlob Parsing**: Proper blob index structure parsing
 - **CodeDirectory**: CDHash, Team ID, Signing ID extraction
 - **Entitlements**: XML entitlement parsing and formatting
@@ -111,6 +118,7 @@ ReDyne is a sophisticated, native iOS application for reverse engineering and an
 - **Certificate Chain**: Signing authority tracking
 
 ### 🔢 Hex Viewer
+
 - **Hexadecimal Display**: View raw binary data in hex format with ASCII representation
 - **Address Navigation**: Jump to specific addresses, functions, or sections
 - **Smart Annotations**: Display section names and data type information
@@ -121,6 +129,7 @@ ReDyne is a sophisticated, native iOS application for reverse engineering and an
 - **Search Support**: Search by hexadecimal address notation
 
 ### 🎨 Export Formats
+
 - **TXT**: Clean, readable text format
 - **JSON**: Structured JSON with full metadata
 - **HTML**: Styled HTML with syntax highlighting
@@ -128,16 +137,19 @@ ReDyne is a sophisticated, native iOS application for reverse engineering and an
 - **Share Sheet**: Native iOS sharing integration
 
 ### 🧾 Class Dump & Types
+
 - **Class Dump Headers**: Generate Objective-C style headers from binaries
 - **Type Reconstruction**: Infer types and surface reconstructed metadata
 
 ### 🗂️ String Analysis
+
 - **C-String Extraction**: ASCII/UTF-8 string detection
 - **Minimum Length Filter**: Configurable string size
 - **Section-Aware**: Extract from `__cstring`, `__text`, etc.
 - **Encoding Detection**: Automatic charset recognition
 
 ### 💾 Recent Files
+
 - **Security-Scoped Bookmarks**: Persistent file access
 - **Automatic Cleanup**: Stale bookmark refresh
 - **Swipe to Delete**: Easy management
@@ -150,6 +162,7 @@ ReDyne is a sophisticated, native iOS application for reverse engineering and an
 ### Technology Stack
 
 **Core Parsing (C)**
+
 - `MachOParser.c` - Mach-O header/command parsing
 - `DisassemblyEngine.c` - ARM64/x86_64 instruction decoding
 - `SymbolTable.c` - Symbol table parsing
@@ -160,16 +173,19 @@ ReDyne is a sophisticated, native iOS application for reverse engineering and an
 - `StringExtractor.c` - String extraction
 
 **Services (Objective-C)**
+
 - `MachOParserService.m` - Swift bridge for Mach-O parsing
 - `DisassemblerService.m` - Disassembly service with pseudocode
 - `ObjCParserBridge.m` - ObjC runtime bridge
 
 **Analysis (Swift)**
+
 - `CFGAnalyzer.swift` - Control flow graph analysis
 - `XrefAnalyzer.swift` - Cross-reference analysis with symbolic execution
 - `CFGModels.swift` - Graph layout algorithms
 
 **UI (Swift + UIKit)**
+
 - `FilePickerViewController` - File selection and recents
 - `DecompileViewController` - Main analysis orchestration
 - `ResultsViewController` - Multi-tab results display
@@ -210,12 +226,14 @@ ReDyne is a sophisticated, native iOS application for reverse engineering and an
 ### Building from Source
 
 1. **Clone the Repository**
+   
    ```bash
    git clone https://github.com/IntervalMedia/ReDyne.git
    cd ReDyne
    ```
 
 2. **Open in Xcode**
+   
    ```bash
    open ReDyne.xcodeproj
    ```
@@ -282,6 +300,7 @@ This workflow is ideal for contributors without macOS or those who prefer cloud-
 ### Advanced Features
 
 **Hex Viewer**
+
 - View binary data in hexadecimal format with ASCII representation
 - Navigate to specific addresses or functions
 - Filter by code/data sections
@@ -291,22 +310,26 @@ This workflow is ideal for contributors without macOS or those who prefer cloud-
 - Search for specific addresses using hex notation (0x...)
 
 **Control Flow Graphs**
+
 - Tap any function to visualize its CFG
 - Pinch to zoom in/out (0.05x to 3.0x)
 - Drag to pan across large graphs
 - Tap nodes to inspect basic blocks
 
 **Export Data**
+
 - Tap the share button in any tab
 - Choose format: TXT, JSON, HTML, or PDF
 - Share via AirDrop, Messages, Mail, etc.
 
 **Recent Files**
+
 - Files automatically saved to recents
 - Swipe left to delete entries
 - Tap to re-open (works even after app restart!)
 
 **Universal Binary Selection**
+
 - For fat binaries, choose specific architecture
 - ARM64, ARM64e, x86_64 options shown
 - Analysis tailored to selected slice
