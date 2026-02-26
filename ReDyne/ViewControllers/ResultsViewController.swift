@@ -295,10 +295,38 @@ class ResultsViewController: UIViewController {
     }
 
     @objc private func showFunctionImportPicker() {
-        let picker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.json])
-        picker.delegate = self
-        picker.allowsMultipleSelection = false
-        present(picker, animated: true)
+        FilePickerHelper.presentFilePicker(types: [.json], from: self) { [weak self] urls in
+            guard let self = self, let url = urls.first else { return }
+            self.handleFunctionImport(from: url)
+        }
+    }
+    
+    private func handleFunctionImport(from url: URL) {
+        let shouldStop = url.startAccessingSecurityScopedResource()
+        defer {
+            if shouldStop { url.stopAccessingSecurityScopedResource() }
+        }
+
+        do {
+            let data = try Data(contentsOf: url)
+            let entries = try FunctionNameImportService.parse(data: data)
+
+            let updatedFunctions = FunctionNameImportService.apply(entries: entries, to: output.functions)
+            output.functions = updatedFunctions
+            output.totalFunctions = UInt(updatedFunctions.count)
+
+            for entry in entries {
+                FunctionDatabase.shared.rename(binaryPath: output.filePath, address: entry.address, newName: entry.name)
+            }
+
+            functionsViewController.updateFunctions(updatedFunctions)
+            if let functionsVC = currentViewController as? FunctionsViewController {
+                functionsVC.updateFunctions(updatedFunctions)
+            }
+        } catch {
+            let message = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+            showAlert(title: "Import Failed", message: message)
+        }
     }
     
     // MARK: - Actions
@@ -468,40 +496,6 @@ extension ResultsViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-    }
-}
-
-// MARK: - Document Picker Delegate
-
-extension ResultsViewController: UIDocumentPickerDelegate {
-    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        guard let url = urls.first else { return }
-
-        let shouldStop = url.startAccessingSecurityScopedResource()
-        defer {
-            if shouldStop { url.stopAccessingSecurityScopedResource() }
-        }
-
-        do {
-            let data = try Data(contentsOf: url)
-            let entries = try FunctionNameImportService.parse(data: data)
-
-            let updatedFunctions = FunctionNameImportService.apply(entries: entries, to: output.functions)
-            output.functions = updatedFunctions
-            output.totalFunctions = UInt(updatedFunctions.count)
-
-            for entry in entries {
-                FunctionDatabase.shared.rename(binaryPath: output.filePath, address: entry.address, newName: entry.name)
-            }
-
-            functionsViewController.updateFunctions(updatedFunctions)
-            if let functionsVC = currentViewController as? FunctionsViewController {
-                functionsVC.updateFunctions(updatedFunctions)
-            }
-        } catch {
-            let message = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
-            showAlert(title: "Import Failed", message: message)
-        }
     }
 }
 

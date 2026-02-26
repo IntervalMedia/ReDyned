@@ -3,31 +3,60 @@
 #pragma mark - MachOHeaderModel
 
 @implementation MachOHeaderModel
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 @end
 
 #pragma mark - SegmentModel
 
 @implementation SegmentModel
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 @end
 
 #pragma mark - SectionModel
 
 @implementation SectionModel
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 @end
 
 #pragma mark - SymbolModel
 
 @implementation SymbolModel
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 @end
 
 #pragma mark - StringModel
 
 @implementation StringModel
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 @end
 
 #pragma mark - InstructionModel
 
 @implementation InstructionModel
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 - (NSAttributedString *)attributedString {
     NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] init];
@@ -80,11 +109,20 @@
 #pragma mark - FunctionModel
 
 @implementation FunctionModel
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 @end
 
 #pragma mark - DecompiledOutput
 
 @implementation DecompiledOutput
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 - (instancetype)init {
     self = [super init];

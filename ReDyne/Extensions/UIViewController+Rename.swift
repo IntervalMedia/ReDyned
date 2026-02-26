@@ -181,10 +181,25 @@ extension UIViewController {
     }
     
     private func importDatabase() {
-        let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [.json])
-        documentPicker.delegate = self as? UIDocumentPickerDelegate
-        documentPicker.allowsMultipleSelection = false
-        present(documentPicker, animated: true)
+        FilePickerHelper.presentFilePicker(types: [.json], from: self) { [weak self] urls in
+            guard let self = self, let url = urls.first else { return }
+            self.handleDatabaseImport(from: url)
+        }
+    }
+    
+    private func handleDatabaseImport(from url: URL) {
+        let shouldStop = url.startAccessingSecurityScopedResource()
+        defer {
+            if shouldStop { url.stopAccessingSecurityScopedResource() }
+        }
+        
+        do {
+            let data = try Data(contentsOf: url)
+            try FunctionDatabase.shared.importDatabase(from: data)
+            showSuccessAlert(message: "Database imported successfully")
+        } catch {
+            showErrorAlert(message: "Failed to import database: \(error.localizedDescription)")
+        }
     }
     
     private func confirmClearDatabase(for binaryPath: String) {

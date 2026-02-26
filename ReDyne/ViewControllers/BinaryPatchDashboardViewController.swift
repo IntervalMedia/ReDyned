@@ -275,10 +275,29 @@ class BinaryPatchDashboardViewController: UIViewController {
     }
     
     @objc private func importPatchSet() {
-        let picker = UIDocumentPickerViewController(forOpeningContentTypes: [.json])
-        picker.delegate = self
-        picker.allowsMultipleSelection = false
-        present(picker, animated: true)
+        FilePickerHelper.presentFilePicker(types: [.json], from: self) { [weak self] urls in
+            guard let self = self, let url = urls.first else { return }
+            self.handlePatchImport(from: url)
+        }
+    }
+    
+    private func handlePatchImport(from url: URL) {
+        let shouldStop = url.startAccessingSecurityScopedResource()
+        defer {
+            if shouldStop { url.stopAccessingSecurityScopedResource() }
+        }
+        
+        do {
+            let data = try Data(contentsOf: url)
+            try BinaryPatchService.shared.importPatchSet(from: data)
+            loadPatchSets()
+            
+            let alert = UIAlertController(title: "Success", message: "Patch set imported successfully", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            present(alert, animated: true)
+        } catch {
+            ErrorHandler.showError(error, in: self)
+        }
     }
     
     @objc private func dismissViewController() {
@@ -369,26 +388,6 @@ extension BinaryPatchDashboardViewController: UISearchResultsUpdating {
         
         filteredPatchSets = BinaryPatchService.shared.searchPatchSets(query: query)
         tableView.reloadData()
-    }
-}
-
-// MARK: - UIDocumentPickerDelegate
-
-extension BinaryPatchDashboardViewController: UIDocumentPickerDelegate {
-    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        guard let url = urls.first else { return }
-        
-        do {
-            let data = try Data(contentsOf: url)
-            try BinaryPatchService.shared.importPatchSet(from: data)
-            loadPatchSets()
-            
-            let alert = UIAlertController(title: "Success", message: "Patch set imported successfully", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default))
-            present(alert, animated: true)
-        } catch {
-            ErrorHandler.showError(error, in: self)
-        }
     }
 }
 

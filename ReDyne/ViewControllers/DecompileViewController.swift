@@ -133,6 +133,23 @@ class DecompileViewController: UIViewController {
         activityIndicator.startAnimating()
         progressView.progress = 0
         
+        // Check for cached result first
+        statusLabel.text = "Checking cache..."
+        if let cachedOutput = DecompilationCache.shared.getCachedResult(for: fileURL) {
+            print("✅ Using cached decompilation result for \(fileURL.lastPathComponent)")
+            statusLabel.text = "Loading from cache..."
+            progressView.progress = 1.0
+            
+            // Small delay to show the cache message
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
+                self?.showResults(cachedOutput)
+            }
+            return
+        }
+        
+        print("🔄 No cache found, starting fresh decompilation for \(fileURL.lastPathComponent)")
+        statusLabel.text = "Preparing..."
+        
         let processingQueue = DispatchQueue(label: Constants.Processing.backgroundQueueLabel, qos: .userInitiated)
         
         decompileTask = DispatchWorkItem { [weak self] in
@@ -245,6 +262,9 @@ class DecompileViewController: UIViewController {
             output.cfgAnalysis = cfgResult
             
             self.updateStatus("Finalizing...", progress: 0.99)
+            
+            // Save to cache for future use
+            DecompilationCache.shared.saveCachedResult(output, for: self.fileURL)
             
             DispatchQueue.main.async {
                 self.showResults(output)

@@ -5,7 +5,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Header Information
 
-@interface MachOHeaderModel : NSObject
+@interface MachOHeaderModel : NSObject <NSSecureCoding>
 
 @property (nonatomic, copy) NSString *cpuType;
 @property (nonatomic, copy) NSString *fileType;
@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Segment Information
 
-@interface SegmentModel : NSObject
+@interface SegmentModel : NSObject <NSSecureCoding>
 
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, assign) uint64_t vmAddress;
@@ -34,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Section Information
 
-@interface SectionModel : NSObject
+@interface SectionModel : NSObject <NSSecureCoding>
 
 @property (nonatomic, copy) NSString *sectionName;
 @property (nonatomic, copy) NSString *segmentName;
@@ -46,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Symbol Information
 
-@interface SymbolModel : NSObject
+@interface SymbolModel : NSObject <NSSecureCoding>
 
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, assign) uint64_t address;
@@ -63,7 +63,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - String Information
 
-@interface StringModel : NSObject
+@interface StringModel : NSObject <NSSecureCoding>
 
 @property (nonatomic, copy) NSString *content;
 @property (nonatomic, assign) uint64_t address;
@@ -77,7 +77,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Disassembled Instruction
 
-@interface InstructionModel : NSObject
+@interface InstructionModel : NSObject <NSSecureCoding>
 
 @property (nonatomic, assign) uint64_t address;
 @property (nonatomic, copy) NSString *hexBytes;
@@ -99,7 +99,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Function Information
 
-@interface FunctionModel : NSObject
+@interface FunctionModel : NSObject <NSSecureCoding>
 
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, assign) uint64_t startAddress;
@@ -112,7 +112,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Complete Decompilation Output
 
-@interface DecompiledOutput : NSObject
+@interface DecompiledOutput : NSObject <NSSecureCoding>
 
 @property (nonatomic, strong) MachOHeaderModel *header;
 @property (nonatomic, strong) NSArray<SegmentModel *> *segments;

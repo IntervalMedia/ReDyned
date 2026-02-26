@@ -229,9 +229,31 @@ ReDyne is a sophisticated, native iOS application for reverse engineering and an
    - Press `Cmd+R` to build and run
 
 ### Requirements for Building
-- Xcode 15.0+
-- macOS 14.0+ (Sonoma)
+- Xcode 16.0+
+- macOS 15.0+
 - Active Apple Developer account (for device testing)
+
+### Alternative: VSCode + GitHub Actions
+
+You can develop and build ReDyne without a local Xcode setup:
+
+1. **Code in VSCode**
+   - Use VS Code or any editor to modify Swift/Objective-C/C source files
+   - The project includes a `.code-workspace` file for VS Code integration
+   - Leverage language servers and extensions for syntax highlighting
+
+2. **Build with GitHub Actions**
+   - Fork the repository and push your changes to GitHub
+   - GitHub Actions workflow automatically builds the project
+   - Produces an **unsigned IPA file** artifact
+
+3. **Sign the IPA**
+   - Download the unsigned IPA from GitHub Actions artifacts
+   - Use a signing service (e.g., AltStore, Sideloadly, iOS App Signer) to sign it
+   - Obtain a free Apple Developer certificate from [developer.apple.com](https://developer.apple.com)
+   - Install the signed IPA on your device via Xcode, AltStore, or similar tools
+
+This workflow is ideal for contributors without macOS or those who prefer cloud-based CI/CD.
 
 ---
 

@@ -7,17 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### ✨ Added
+- Decompilation result caching system to avoid re-analyzing binaries on subsequent opens
+- Cache management UI in settings menu showing cache size and item count
+
 ### 📚 Documentation
 - Refreshed Documentation/ notes with v1.1 (build 2) last-updated stamps
+- Added VSCode development and GitHub Actions CI/CD workflow information to README installation section
 
 ### 🛠️ Changed
 - Updated the About ReDyne dialog text and version string to read from Info.plist
 - Reused the app version label in settings, diagnostics, and export outputs
 - UserDefaults keys now derive from the bundle identifier instead of a hardcoded value
+- Decompilation results are now cached for 30 days to improve performance on re-opening binaries
 
 ### 🐛 Bug Fixes
 - Fixed ClassDumpService method name mismatch in DecompileViewController (generateHeaderForBinary vs generateHeader)
 - Removed iOS-unavailable .withSecurityScope bookmark options from FilePickerViewController
+- Fixed JSON file selection for function name import, patch import, and database import to use EnhancedFilePicker in Legacy mode
+- Fixed binary metadata not persisting across app reloads by implementing comprehensive decompilation cache
 
 ## [1.1.0] - 2026-02-26
 

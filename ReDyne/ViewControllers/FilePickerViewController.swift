@@ -198,6 +198,16 @@ import Combine
             self?.clearRecentFiles()
         })
         
+        // Cache management options
+        let cacheCount = DecompilationCache.shared.cachedBinaryCount()
+        let cacheSize = Constants.formatBytes(DecompilationCache.shared.totalCacheSize())
+        if cacheCount > 0 {
+            let cacheTitle = "Clear Decompilation Cache (\(cacheCount) items, \(cacheSize))"
+            alert.addAction(UIAlertAction(title: cacheTitle, style: .destructive) { [weak self] _ in
+                self?.clearDecompilationCache()
+            })
+        }
+        
         alert.addAction(UIAlertAction(title: "About ReDyne", style: .default) { [weak self] _ in
             self?.showAbout()
         })
@@ -234,6 +244,28 @@ import Combine
     private func clearRecentFiles() {
         UserDefaults.standard.clearRecentFiles()
         loadRecentFiles()
+    }
+    
+    private func clearDecompilationCache() {
+        let alert = UIAlertController(
+            title: "Clear Cache?",
+            message: "This will delete all cached decompilation results. Binaries will need to be re-analyzed on next open.",
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(title: "Clear Cache", style: .destructive) { [weak self] _ in
+            DecompilationCache.shared.clearAllCaches()
+            let successAlert = UIAlertController(
+                title: "Cache Cleared",
+                message: "All decompilation caches have been removed.",
+                preferredStyle: .alert
+            )
+            successAlert.addAction(UIAlertAction(title: "OK", style: .default))
+            self?.present(successAlert, animated: true)
+        })
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(alert, animated: true)
     }
     
     private func showAbout() {
